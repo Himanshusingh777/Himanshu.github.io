@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements | Himanshu Singh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 40px;
+        }
+        
+        nav ul li a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1em;
+            transition: color 0.3s;
+            letter-spacing: 0.5px;
+        }
+        
+        nav ul li a:hover {
+            color: #3b82f6;
+        }
+        
+        .achievements-section {
+            padding: 120px 20px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .section-title {
+            font-size: 2.5em;
+            color: #f8fafc;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.1em;
+            color: #94a3b8;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        
+        .stat-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+            box-shadow: 0 15px 50px rgba(59, 130, 246, 0.2);
+        }
+        
+        .stat-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #cbd5e1;
+            font-size: 1em;
+            font-weight: 500;
+        }
+        
+        .filter-section {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+        
+        .filter-btn {
+            background: rgba(59, 130, 246, 0.1);
+            backdrop-filter: blur(10px);
+            color: #94a3b8;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-size: 0.95em;
+            letter-spacing: 0.3px;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        
+        .achievement-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+            transform: scaleY(0);
+            transition: transform 0.3s;
+        }
+        
+        .achievement-card:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
+            border-color: #3b82f6;
+        }
+        
+        .achievement-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .achievement-icon {
+            font-size: 2.5em;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+        
+        .achievement-info {
+            flex: 1;
+        }
+        
+        .achievement-category {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        
+        .achievement-title {
+            color: #f8fafc;
+            font-size: 1.3em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .achievement-description {
+            color: #cbd5e1;
+            line-height: 1.6;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+        }
+        
+        .achievement-date {
+            color: #94a3b8;
+            font-size: 0.85em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .achievement-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(59, 130, 246, 0.1);
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .achievement-badge {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        
+        .view-btn {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .view-btn:hover {
+            background: #3b82f6;
+            color: #fff;
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+        /* Modal Styles */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 120px;
+            width: 50%;
+            height: 50%;
+            background: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            animation: zoomIn 0.3s ease;
+        }
+        
+        .modal-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: #fff;
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+            background: rgba(59, 130, 246, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-close:hover {
+            color: #3b82f6;
+        }
+        /* Gallery Section */
+        
+        .gallery-section {
+            margin-top: 50px;
+            animation: fadeInUp 0.8s ease 0.5s both;
+        }
+        
+        .gallery-section .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2em;
+        }
+        
+        .horizontal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        
+        .gallery-card {
+            height: 320px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 48px rgba(59, 130, 246, 0.4);
+            border-color: #3b82f6;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(15, 23, 42, 0.95);
+            color: #94a3b8;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9em;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        /* Mobile Responsive */
+        
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 20px;
+                padding: 0 10px;
+            }
+            nav ul li a {
+                font-size: 0.9em;
+            }
+            .achievements-section {
+                padding: 100px 15px 40px;
+            }
+            .section-title {
+                font-size: 2em;
+            }
+            .section-subtitle {
+                font-size: 1em;
+            }
+            .stats-overview {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .stat-card {
+                padding: 20px;
+            }
+            .stat-icon {
+                font-size: 2em;
+            }
+            .stat-number {
+                font-size: 2em;
+            }
+            .stat-label {
+                font-size: 0.9em;
+            }
+            .filter-btn {
+                padding: 8px 18px;
+                font-size: 0.85em;
+            }
+            .achievements-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .achievement-card {
+                padding: 25px;
+            }
+            .achievement-icon {
+                font-size: 2em;
+                width: 50px;
+                height: 50px;
+            }
+            .achievement-title {
+                font-size: 1.15em;
+            }
+            .horizontal-gallery {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .gallery-card {
+                height: 260px;
+            }
+            .modal-close {
+                top: 10px;
+                right: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header {
+                padding: 15px 0;
+            }
+            nav ul {
+                gap: 15px;
+            }
+            nav ul li a {
+                font-size: 0.85em;
+            }
+            .section-title {
+                font-size: 1.7em;
+            }
+            .stats-overview {
+                grid-template-columns: 1fr;
+            }
+            .stat-card {
+                padding: 18px;
+            }
+            .filter-btn {
+                padding: 7px 15px;
+                font-size: 0.8em;
+            }
+            .achievement-card {
+                padding: 20px;
+            }
+            .achievement-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .achievement-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.8em;
+            }
+            .achievement-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .view-btn {
+                width: 100%;
+                text-align: center;
+            }
+            .gallery-card {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="achievements-section">
+        <div class="section-header">
+            <h1 class="section-title">Achievements & Certifications</h1>
+            <p class="section-subtitle">A showcase of my accomplishments, competition wins, and professional certifications in technology and innovation</p>
+        </div>
+
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-number">4+</div>
+                <div class="stat-label">Hackathon Wins</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📜</div>
+                <div class="stat-number">6+</div>
+                <div class="stat-label">Certifications</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-number">2+</div>
+                <div class="stat-label">Competitions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-number">11+</div>
+                <div class="stat-label">Total Achievements</div>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="hackathon">Hackathons</button>
+            <button class="filter-btn" data-filter="certification">Certifications</button>
+            <button class="filter-btn" data-filter="competition">Competitions</button>
+            <button class="filter-btn" data-filter="gallery">Gallery</button>
+        </div>
+
+        <div class="achievements-grid" id="achievementsGrid">
+            <!-- AI Hackathon Winner -->
+            <div class="achievement-card" data-category="hackathon">
+                <div class="achievement-header">
+                    <div class="achievement-icon">🏆</div>
+                    <div class="achievement-info">
+                        <span class="achievement-category">HACKATHON</span>
+                        <h3 class="achievement-title">AI Hackathon Winner</h3>
+                    </div>
+                </div>
+                <p class="achievement-description">Won first place at AI Hackathon 2025 with AthleteEdge AI - an AI-powered sports analytics platform for performance optimization</p>
+                <div class="achievement-meta">
+                    <span class="achievement-date">📅 2025</span>
+                    <span class="achievement-badge">1st Place</span>
+                    <button class="view-btn" onclick="openModal('/static/image/AI.jpg')">View</button>
+                </div>
+            </div>
+
+            <!-- Hacknovation 1.0 -->
+            <div class="achievement-card" data-category="hackathon">
+                <div class="achievement-header">
+                    <div class="achievement-icon">🏥</div>
+                    <div class="achievement-info">
+                        <span class="achievement-category">HACKATHON</span>
+                        <h3 class="achievement-title">Hacknovation 1.0 Winner</h3>
+                    </div>
+                </div>
+                <p class="achievement-description">Awarded Best Healthcare AI Solution for developing SwasthaAI - an intelligent healthcare assistant</p>
+                <div class="achievement-meta">
+                    <span class="achievement-date">📅 2024</span>
+                    <span class="achievement-badge">Best Solution</span>
+                    <button class="view-btn" onclick="openModal('/static/image/1.0.jpeg')">View</button>
+                </div>
+            </div>
+
+            <!-- MSME Hackathon -->
+            <div class="achievement-card" data-category="hackathon">
+                <div class="achievement-header">
+                    <div class="achievement-icon">🚀</div>
+                    <div class="achievement-info">
+                        <span class="achievement-category">HACKATHON</span>
+                        <h3 class="achievement-title">MSME Hackathon 5.0</h3>
+                    </div>
+                </div>
+                <p class="achievement-description">Selected participant for developing Cobot Threat Detection and Prevention Toolkit for cybersecurity</p>
+                <div class="achievement-meta">
+                    <span class="achievement-date">📅 2025</span>
+                    <span class="achievement-badge">Selected</span>
+                    <button class="view-btn" onclick="openModal('/static/image/msme-hackathon.jpg')">View</button>
+                </div>
+            </div>
+
+            <!-- SIH 2024 -->
+            <div class="achievement-card" data-category="hackathon">
+                <div class="achievement-header">
+                    <div class="achievement-icon">🥈</div>
+                    <div class="achievement-info">
+                        <span class="achievement-category">HACKATHON</span>
+                        <h3 class="achievement-title">SIH Hackathon 2024</h3>
+                    </div>
+                </div>
+                <p class="achievement-description">Secured Runner-Up position in Agriculture Domain at Smart India Hackathon with innovative agritech solution</p>
+                <div class="achievement-meta">
+                    <span class="achievement-date">📅 2024</span>
+                    <span class="achievement-badge">Runner-Up</span>
+                    <button class="view-btn" onclick="openModal('/static/image/sih.jpg')">View</button>
+                </div>
+            </div>
+
+            <!-- Python Certification -->
+            <div class="achievement-card" data-category="certification">
+                <div class="achievement-header">
+                    <div class="achievement-icon">📜</div>
+                    <div class="achievement-info">
+                        <span class="achievement-category">CERTIFICATION</span>
+                        <h3 class="achievement-title">Python Certification</h3>
+                    </div>
+                </div>
+                <p class="achievement-description">Earned Python programming certification from HackerRank demonstrating proficiency in Python development</p>
+                <div class="achievement-meta">
+                    <span class="achievement-date">📅 HackerRank</span>
+                    <span class="achievement-badge">Certified</span>
+                    <button class="view-btn" onclick="openModal('/static/image/py.png')">View</button>
+                </div>
+            </div>
+
+            <!-- NPTEL - HCI -->
+            <div class="achievement-card" data-category="certification">
+                <div class="achievement-header">
+                    <div class="achievement-icon">📚</div>
+                    <div class="achievement-info">
+                        <span class="achievement-category">CERTIFICATION</span>
+                        <h3 class="achievement-title">Human Computer Interaction</h3>
+                    </div>
+                </div>
+                <p class="achievement-description">Completed NPTEL course from IIIT Delhi with 79% score and earned Silver Badge</p>
+                <div class="achievement-meta">
+                    <span class="achievement-date">📅 NPTEL - IIIT Delhi</span>
+                    <span class="achievement-badge">Silver Badge</span>
+                    <button class="view-btn" onclick="openModal('/static/image/Human.jpg')">View</button>
+                </div>
+            </div>
+
+            <!-- Cloud Computing -->
+            <div class="achievement-card" data-category="certification">
+                <div class="achievement-header">
+                    <div class="achievement-icon">☁️</div>
+                    <div class="achievement-info">
+                        <span class="achievement-category">CERTIFICATION</span>
+                        <h3 class="achievement-title">Cloud Computing</h3>
+                    </div>
+                </div>
+                <p class="achievement-description">Completed NPTEL course from IIT Kanpur and earned Elite Badge</p>
+                <div class="achievement-meta">
+                    <span class="achievement-date">📅 NPTEL - IIT Kanpur</span>
+                    <span class="achievement-badge">Elite Badge</span>
+                    <button class="view-btn" onclick="openModal('/static/image/cc.jpg')">View</button>
+                </div>
+            </div>
+
+            <!-- AI/ML Certificate -->
+            <div class="achievement-card" data-category="certification">
+                <div class="achievement-header">
+                    <div class="achievement-icon">🤖</div>
+                    <div class="achievement-info">
+                        <span class="achievement-category">CERTIFICATION</span>
+                        <h3 class="achievement-title">Machine Learning Specialization</h3>
+                    </div>
+                </div>
+                <p class="achievement-description">Completed comprehensive Machine Learning specialization covering AI/ML fundamentals and advanced concepts</p>
+                <div class="achievement-meta">
+                    <span class="achievement-date">📅 2024</span>
+                    <span class="achievement-badge">Certified</span>
+                    <button class="view-btn" onclick="openModal('/static/image/ml-cert.jpg')">View</button>
+                </div>
+            </div>
+
+            <!-- Generative AI -->
+            <div class="achievement-card" data-category="certification">
+                <div class="achievement-header">
+                    <div class="achievement-icon">✨</div>
+                    <div class="achievement-info">
+                        <span class="achievement-category">CERTIFICATION</span>
+                        <h3 class="achievement-title">Generative AI</h3>
+                    </div>
+                </div>
+                <p class="achievement-description">Completed Generative AI fundamentals and advanced concepts on LinkedIn</p>
+                <div class="achievement-meta">
+                    <span class="achievement-date">📅 2024</span>
+                    <span class="achievement-badge">Certified</span>
+                    <button class="view-btn" onclick="openModal('/static/image/gen.jpg')">View</button>
+                </div>
+            </div>
+
+            <!-- Startup Fair -->
+            <div class="achievement-card" data-category="competition">
+                <div class="achievement-header">
+                    <div class="achievement-icon">🎓</div>
+                    <div class="achievement-info">
+                        <span class="achievement-category">COMPETITION</span>
+                        <h3 class="achievement-title">Startup Fair Winner</h3>
+                    </div>
+                </div>
+                <p class="achievement-description">Winner in Startup Fair organized by GIETU during their TechFest showcasing innovative solutions</p>
+                <div class="achievement-meta">
+                    <span class="achievement-date">📅 GIETU TechFest</span>
+                    <span class="achievement-badge">Winner</span>
+                    <button class="view-btn" onclick="openModal('/static/image/startup.jpg')">View</button>
+                </div>
+            </div>
+
+            <!-- Tug of War -->
+            <div class="achievement-card" data-category="competition">
+                <div class="achievement-header">
+                    <div class="achievement-icon">💪</div>
+                    <div class="achievement-info">
+                        <span class="achievement-category">SPORTS</span>
+                        <h3 class="achievement-title">Tug of War Champion</h3>
+                    </div>
+                </div>
+                <p class="achievement-description">Led team as Captain to victory winning 7 consecutive matches demonstrating leadership and teamwork</p>
+                <div class="achievement-meta">
+                    <span class="achievement-date">📅 College Sports</span>
+                    <span class="achievement-badge">Champion</span>
+                    <button class="view-btn" onclick="openModal('/static/image/war.jpg')">View</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Section (OUTSIDE the grid) -->
+        <div class="gallery-section" id="gallerySection" style="display:none;">
+            <h2 class="section-title">Sports Gallery</h2>
+            <div class="horizontal-gallery">
+                <div class="gallery-card"><img src="/static/image/g1.jpeg" alt="Sports 1"></div>
+                <div class="gallery-card"><img src="/static/image/g2.jpeg" alt="Sports 2"></div>
+                <div class="gallery-card"><img src="/static/image/g4.jpeg" alt="Sports 3"></div>
+                <div class="gallery-card"><img src="/static/image/g9.jpeg" alt="Sports 4"></div>
+                <div class="gallery-card"><img src="/static/image/g3.jpeg" alt="Sports 5"></div>
+                <div class="gallery-card"><img src="/static/image/g5.jpeg" alt="Sports 6"></div>
+                <div class="gallery-card"><img src="/static/image/g6.jpeg" alt="Sports 7"></div>
+                <div class="gallery-card"><img src="/static/image/g7.jpeg" alt="Sports 8"></div>
+                <div class="gallery-card"><img src="/static/image/g8.jpeg" alt="Sports 9"></div>
+                <div class="gallery-card"><img src="/static/image/g21.jpeg" alt="Sports 10"></div>
+                <div class="gallery-card"><img src="/static/image/g10.jpeg" alt="Sports 11"></div>
+                <div class="gallery-card"><img src="/static/image/g11.jpeg" alt="Sports 12"></div>
+                <div class="gallery-card"><img src="/static/image/g14.jpeg" alt="Sports 13"></div>
+                <div class="gallery-card"><img src="/static/image/g19.jpeg" alt="Sports 14"></div>
+                <div class="gallery-card"><img src="/static/image/g12.jpeg" alt="Sports 15"></div>
+                <div class="gallery-card"><img src="/static/image/g15.jpeg" alt="Sports 16"></div>
+                <div class="gallery-card"><img src="/static/image/g16.jpeg" alt="Sports 17"></div>
+                <div class="gallery-card"><img src="/static/image/g17.jpeg" alt="Sports 18"></div>
+                <div class="gallery-card"><img src="/static/image/g18.jpeg" alt="Sports 19"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal(event)">&times;</span>
+            <img id="modalImage" src="" alt="Achievement">
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Himanshu Singh | Professional Portfolio
+    </footer>
+
+    <script>
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const achievementCards = document.querySelectorAll('.achievement-card');
+        const achievementsGrid = document.getElementById('achievementsGrid');
+        const gallerySection = document.getElementById('gallerySection');
+
+        // Filter functionality
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.dataset.filter;
+
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                if (filter === 'all') {
+                    // Show all achievements, hide gallery
+                    achievementsGrid.style.display = 'grid';
+                    gallerySection.style.display = 'none';
+                    achievementCards.forEach(card => card.style.display = 'block');
+                } else if (filter === 'gallery') {
+                    // Hide achievements, show gallery
+                    achievementsGrid.style.display = 'none';
+                    gallerySection.style.display = 'block';
+                    setTimeout(() => {
+                        gallerySection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }, 100);
+                } else {
+                    // Show filtered achievements, hide gallery
+                    achievementsGrid.style.display = 'grid';
+                    gallerySection.style.display = 'none';
+                    achievementCards.forEach(card => {
+                        if (card.dataset.category === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
+
+        // Modal functionality
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.classList.add('active');
+            modalImg.src = imageSrc;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (event.target.classList.contains('modal') || event.target.classList.contains('modal-close')) {
+                const modal = document.getElementById('imageModal');
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('imageModal');
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+
+</html>
