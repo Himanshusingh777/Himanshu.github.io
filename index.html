@@ -235,6 +235,36 @@
                 box-shadow: 0 0 70px rgba(251, 191, 36, 1), 0 0 140px rgba(251, 191, 36, 0.7);
             }
         }
+        /* ===== MOBILE MENU ===== */
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+        
+        .menu-toggle span {
+            width: 28px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
         /* ===== NAVBAR (ENHANCED) ===== */
         
         header {
@@ -288,6 +318,7 @@
             -webkit-text-fill-color: transparent;
             animation: gradientShift 4s ease infinite;
             position: relative;
+            z-index: 1001;
         }
         
         .logo::after {
@@ -371,6 +402,7 @@
             gap: 60px;
             align-items: center;
             animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
         }
         
         @keyframes fadeInUp {
@@ -498,6 +530,8 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            cursor: pointer;
+            border: none;
         }
         
         .btn::before {
@@ -524,7 +558,6 @@
             background-size: 200% 200%;
             color: #fff;
             box-shadow: 0 15px 40px rgba(14, 165, 233, 0.4);
-            border: none;
             animation: gradientShift 3s ease infinite;
         }
         
@@ -546,6 +579,20 @@
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 15px 40px var(--glow);
             background: rgba(0, 212, 255, 0.1);
+        }
+        
+        .btn-resume {
+            border: 2px solid #60a5fa;
+            color: #60a5fa;
+            background: transparent;
+            font-weight: 600;
+        }
+        
+        .btn-resume:hover {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.35);
         }
         /* ===== PROFILE CARD (3D ENHANCED) ===== */
         
@@ -600,7 +647,7 @@
         }
         
         .profile-card:hover {
-            transform: translateY(-15px) rotateX(2deg);
+            transform: translateY(-15px);
             box-shadow: 0 40px 120px var(--shadow), 0 0 80px var(--glow);
             border-color: var(--accent-blue);
         }
@@ -624,6 +671,13 @@
             position: relative;
             overflow: hidden;
             animation: gradientShift 3s ease infinite;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
         
         .avatar::before {
@@ -844,52 +898,205 @@
             transform: scaleX(0);
             transition: transform 0.1s ease;
         }
-        /* ===== RESPONSIVE ===== */
+        /* ===== RESPONSIVE DESIGN ===== */
+        
+        @media (max-width: 1024px) {
+            .hero-grid {
+                gap: 40px;
+            }
+            
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            nav ul {
+                gap: 24px;
+            }
+        }
         
         @media (max-width: 900px) {
             .hero-grid {
                 grid-template-columns: 1fr;
+                gap: 50px;
             }
+            
             .hero h1 {
                 font-size: 3rem;
             }
+            
+            .hero p {
+                max-width: 100%;
+            }
+            
+            .profile-card {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
             .lamp-container {
                 right: 20px;
+                transform: scale(0.9);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            /* Mobile Menu Toggle */
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: var(--bg-primary);
+                border-left: 1px solid var(--border-color);
+                flex-direction: column;
+                padding: 100px 40px 40px;
+                gap: 30px;
+                transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+            
+            nav ul.active {
+                right: 0;
+            }
+            
+            nav ul li a {
+                font-size: 1.1rem;
+                padding: 12px 0;
+                display: block;
+            }
+            
+            .hero {
+                padding: 120px 20px 60px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .badge {
+                font-size: 0.75rem;
+                padding: 8px 16px;
+            }
+            
+            .cta {
+                gap: 15px;
+            }
+            
+            .btn {
+                padding: 14px 28px;
+                font-size: 0.95rem;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .profile-card {
+                padding: 35px 25px;
+            }
+            
+            .avatar {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .profile-card h3 {
+                font-size: 1.5rem;
+            }
+            
+            .stats {
+                gap: 15px;
+            }
+            
+            .stat {
+                padding: 20px;
+            }
+            
+            .stat h4 {
+                font-size: 1.8rem;
+            }
+            
+            .lamp-container {
+                right: 15px;
+                transform: scale(0.8);
+            }
+            
+            /* Disable hover effects on mobile */
+            .profile-card:hover {
+                transform: none;
+            }
+            
+            .avatar:hover {
+                transform: none;
             }
         }
         
         @media (max-width: 500px) {
-            nav ul {
-                gap: 16px;
-                font-size: 0.85rem;
+            .logo {
+                font-size: 1.1rem;
             }
+            
             .hero h1 {
-                font-size: 2.4rem;
+                font-size: 2rem;
             }
+            
+            .hero p {
+                font-size: 0.95rem;
+            }
+            
             .stats {
                 grid-template-columns: 1fr;
             }
+            
             .lamp-container {
-                transform: scale(0.8);
+                transform: scale(0.7);
                 right: 10px;
             }
+            
             .profile-card {
-                padding: 30px;
+                padding: 30px 20px;
+            }
+            
+            .avatar {
+                width: 120px;
+                height: 120px;
+            }
+            
+            nav ul {
+                width: 100%;
+                padding: 100px 30px 40px;
+            }
+            
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
             }
         }
         
-        .btn-resume {
-            border: 1px solid #60a5fa;
-            color: #60a5fa;
-            background: transparent;
-            font-weight: 600;
-        }
-        
-        .btn-resume:hover {
-            background: linear-gradient(135deg, #3b82f6, #6366f1);
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.35);
+        @media (max-width: 380px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+            
+            .logo {
+                font-size: 1rem;
+            }
+            
+            .profile-card h3 {
+                font-size: 1.3rem;
+            }
+            
+            .stat h4 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -919,7 +1126,14 @@
     <header>
         <nav>
             <div class="logo">HIMANSHU SINGH</div>
-            <ul>
+            
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul id="navMenu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="projects.html">Projects</a></li>
@@ -933,7 +1147,7 @@
         <div class="hero-grid">
 
             <div>
-                <span class="badge"> AI • Data Analytics • Full‑Stack</span>
+                <span class="badge">🤖 AI • Data Analytics • Full‑Stack</span>
                 <h1>Building <span>Intelligent</span><br>Data‑Driven Solutions</h1>
                 <p>
                     I am a Data & AI enthusiast focused on building impactful analytics dashboards, intelligent healthcare systems, and real‑world machine learning applications that transform industries.
@@ -943,8 +1157,8 @@
                     <a href="projects.html" class="btn btn-primary">View Projects</a>
                     <a href="contact.html" class="btn btn-outline">Contact Me</a>
                     <a href="static/HIMANSHU_RESUME.pdf" class="btn btn-resume" target="_blank">
-       Resume
-    </a>
+                        📄 Resume
+                    </a>
                 </div>
 
             </div>
@@ -952,7 +1166,6 @@
             <div class="profile-card">
                 <div class="avatar">
                     <img src="static/image/imggg.jpeg" alt="Himanshu Singh">
-
                 </div>
                 <h3>Himanshu Singh</h3>
                 <p>Research Analyst • AI Developer</p>
@@ -976,9 +1189,32 @@
         </div>
     </section>
 
-
-
     <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a link
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menuToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+        
         // Theme Toggle with Lamp
         const lampToggle = document.getElementById('lampToggle');
         const body = document.body;
@@ -1004,13 +1240,17 @@
             body.setAttribute('data-theme', savedTheme);
 
             createParticles();
-            initCursorTrail();
+            
+            // Only init cursor trail on desktop
+            if (window.innerWidth > 768) {
+                initCursorTrail();
+            }
         });
 
         // Create Floating Particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 40;
+            const particleCount = window.innerWidth > 768 ? 40 : 20;
 
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
@@ -1028,7 +1268,7 @@
             }
         }
 
-        // Cursor Trail Effect
+        // Cursor Trail Effect (Desktop only)
         function initCursorTrail() {
             const trails = [];
             const trailCount = 10;
@@ -1093,15 +1333,22 @@
             });
         });
 
-        // Add parallax effect on mouse move
-        document.addEventListener('mousemove', (e) => {
-            const cards = document.querySelectorAll('.profile-card, .hero h1');
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+        // Add parallax effect on mouse move (Desktop only)
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                const cards = document.querySelectorAll('.profile-card, .hero h1');
+                const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
 
-            cards.forEach(card => {
-                card.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
+                cards.forEach(card => {
+                    card.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
+                });
             });
+        }
+        
+        // Handle orientation change
+        window.addEventListener('orientationchange', () => {
+            location.reload();
         });
     </script>
 
